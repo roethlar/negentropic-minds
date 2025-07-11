@@ -31,7 +31,7 @@ def query_controller(user_query):
 
     results = []
     for chunk in filtered_chunks:
-        if any(keyword in tag.lower() for tag in chunk['tags']) or keyword in chunk['text'].lower():
+        if keyword in [tag.lower() for tag in chunk['tags']] or keyword in chunk['text'].lower():
             results.append(chunk)
 
     if not results:

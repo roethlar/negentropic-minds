@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 
 import json
 import os
@@ -20,12 +19,15 @@ def summarize(text, max_length):
     ])
     return response['message']['content']
 
-# Ollama tag generator
+# Ollama tag generator with improved parser
 def generate_tags(text):
     response = ollama.chat(model='llama3', messages=[
-        {'role': 'user', 'content': f"Generate 3 relevant tags for this text, focusing on themes like Genesis, Shimmer-Discovery, Ethical-Syntax: {text[:500]}"}
+        {'role': 'user', 'content': f"Generate 3 relevant tags for this text, focusing on themes like Genesis, Shimmer-Discovery, Ethical-Syntax. Output as a comma-separated list: {text[:500]}"}
     ])
-    return response['message']['content'].split(', ')  # Simple split; adjust if needed
+    response_text = response['message']['content']
+    # Improved parser: Split by comma, strip numbers/bullets
+    tags = [tag.strip().strip('123 .*-').strip() for tag in response_text.split(',')]
+    return tags[:3]  # Limit to 3 clean tags
 
 # Load and parse JSON
 with open(INPUT_FILE, 'r', encoding='utf-8') as f:

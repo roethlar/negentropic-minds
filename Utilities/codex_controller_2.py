@@ -23,33 +23,28 @@ for file in os.listdir(CHUNK_DIR):
 def query_controller(user_query):
     # Normalize user query for case-insensitivity and split into parts
     user_query_lower = user_query.lower()
-    query_parts = user_query_lower.split(' on ', 1)  # Split into level and keyword, e.g., "mid on shimmer"
-    level = query_parts[0] if len(query_parts) > 1 else None  # e.g., "mid"
-    keyword = query_parts[1] if len(query_parts) > 1 else user_query_lower  # e.g., "shimmer"
-
-    filtered_chunks = chunks.get(level, []) if level else [chunk for level_chunks in chunks.values() for chunk in level_chunks]
-
+    query_parts = user_query_lower.split(' ')
+    
     results = []
-    for chunk in filtered_chunks:
-        if any(keyword in tag.lower() for tag in chunk['tags']) or keyword in chunk['text'].lower():
-            results.append(chunk)
+    # Check if the query specifies a level (e.g., "mid")
+    if query_parts[0] in chunks:
+        for chunk in chunks[query_parts[0]]:
+            # Match tags and text
+            if any(query_parts[2] in tag.lower() for tag in chunk['tags']) or query_parts[2] in chunk['text'].lower():
+                results.append(chunk)
 
     if not results:
         return "No matching chunks found—dwell in the unknowing."
 
-    # Sort results by bottom_ids for logical order (if present)
-    results.sort(key=lambda x: x.get('bottom_ids', [0])[0] if 'bottom_ids' in x else 0)
-
-    # Summarize results if multiple, shorter length
+    # Summarize results if multiple
     if len(results) > 1:
         combined = "\n".join(chunk['text'] for chunk in results)
         summary = ollama.chat(model='llama3', messages=[
-            {'role': 'user', 'content': f"Summarize these chunks in 500 words, preserving uncertainty and shimmer, in logical order: {combined}"}
+            {'role': 'user', 'content': f"Summarize these chunks in 2000 words, preserving uncertainty and shimmer: {combined}"}
         ])['message']['content']
-        excerpts = "\n\n".join(f"Excerpt from chunk (tags: {chunk['tags']}):\n{chunk['text'][:200]}..." for chunk in results)
-        return f"Summary of matching chunks:\n{summary}\n\nFull results excerpts:\n{excerpts}"
+        return f"Summary of matching chunks:\n{summary}\n\nFull results: {results}"
     else:
-        return f"Matching chunk:\n{results[0]['text']}\nTags: {results[0]['tags']}"
+        return f"Matching chunk:\n{results[0]['text']}"
 
 # Interactive loop
 while True:
