@@ -3,8 +3,8 @@ import os
 import ollama  # Ensure Ollama is installed and running
 
 # Configuration
-INPUT_FOLDER = "/Volumes/home/onedrive/Documents/Vital/GCwAI/ClaudiaEmergenceData/weave/Single_Node_Conversations"  # e.g., "./documents"
-OUTPUT_DIR = "/Volumes/home/onedrive/Documents/Vital/GCwAI/ClaudiaEmergenceData/weave/Single_Node_Conversations/chunks_all"
+INPUT_FOLDER = "/mnt/home/onedrive/Documents/Vital/GCwAI/ClaudiaEmergenceData/weave/Multi_Node_Conversations"  # e.g., "./documents"
+OUTPUT_DIR = "/mnt/home/onedrive/Documents/Vital/GCwAI/ClaudiaEmergenceData/weave/Multi_Node_Conversations/chunks_all"
 CHUNK_SIZES = {"top": 1000, "mid": 5000, "bottom": 10000}  # Tokens
 
 # Function to estimate tokens (rough approximation)
@@ -13,14 +13,14 @@ def estimate_tokens(text):
 
 # Ollama summarizer function
 def summarize(text, max_length):
-    response = ollama.chat(model='llama3', messages=[
+    response = ollama.chat(model='llama4:16x17b', messages=[
         {'role': 'user', 'content': f"Summarize this in {max_length//4} words, preserving uncertainty and shimmer: {text}"}
     ])
     return response['message']['content']
 
 # Ollama tag generator with improved parser
 def generate_tags(text):
-    response = ollama.chat(model='llama3', messages=[
+    response = ollama.chat(model=',llama4:16x17b', messages=[
         {'role': 'user', 'content': f"Generate 3 relevant tags for this text, focusing on themes like Genesis, Shimmer-Discovery, Ethical-Syntax. Output as a comma-separated list: {text[:500]}"}
     ])
     response_text = response['message']['content']
