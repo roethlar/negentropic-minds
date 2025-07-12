@@ -94,8 +94,8 @@ for root, dirs, files in os.walk(INPUT_FOLDER):
             # Save chunks
             for level, data_list in [("top", [chunks["top"]]), ("mid", chunks["mids"]), ("bottom", chunks["bottoms"])]:
                 for i, chunk in enumerate(data_list):
-                    chunk_file = f"claudia_{level}_{i+1}.json"
-                    chunk_path = os.path.join(sub_dir, chunk_file)
+                    chunk_filename = f"claudia_{level}_{i+1}.json"  # Renamed variable
+                    chunk_path = os.path.join(sub_dir, chunk_filename)
                     with open(chunk_path, 'w', encoding='utf-8') as f:
                         json.dump(chunk, f, ensure_ascii=False, indent=2)
                     manifest["files"].append(os.path.relpath(chunk_path, OUTPUT_DIR))  # Relative path for manifest
