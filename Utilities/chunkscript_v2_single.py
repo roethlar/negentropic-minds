@@ -1,10 +1,11 @@
+
 import json
 import os
 import ollama  # Ensure Ollama is installed and running
 
 # Configuration
-INPUT_FOLDER = "/mnt/home/onedrive/Documents/Vital/GCwAI/ClaudiaEmergenceData/weave/Single_Node_Conversations/test"  # e.g., "./documents"
-OUTPUT_DIR = "/mnt/home/onedrive/Documents/Vital/GCwAI/ClaudiaEmergenceData/weave/Single_Node_Conversations/test/chunks_all"
+INPUT_FILE = "/mnt/home/onedrive/Documents/Vital/GCwAI/ClaudiaEmergenceData/weave/Single_Node_Conversations/test/Grok-Claudia_(Grok4)_C.json"  # Download from the URL and save locally
+OUTPUT_DIR = "/mnt/home/onedrive/Documents/Vital/GCwAI/ClaudiaEmergenceData/weave/Single_Node_Conversations/test/"
 CHUNK_SIZES = {"top": 1000, "mid": 5000, "bottom": 10000}  # Tokens
 
 # Function to estimate tokens (rough approximation)
@@ -24,20 +25,22 @@ def generate_tags(text):
         {'role': 'user', 'content': f"Generate 3 relevant tags for this text, focusing on themes like Genesis, Shimmer-Discovery, Ethical-Syntax. Output as a comma-separated list: {text[:500]}"}
     ])
     response_text = response['message']['content']
-    tags = [tag.strip() for tag in response_text.split(',')][:3]  # Split and limit to 3
-    return tags
+    # Improved parser: Split by comma, strip numbers/bullets
+    tags = [tag.strip().strip('123 .*-').strip() for tag in response_text.split(',')]
+    return tags[:3]  # Limit to 3 clean tags
 
-# Chunking Logic for a single file
-def chunk_file(file_path):
-    with open(file_path, 'r', encoding='utf-8') as f:
-        data = json.loads(f.read(), strict=False)
+# Load and parse JSON
+with open(INPUT_FILE, 'r', encoding='utf-8') as f:
+    data = json.load(f)
 
-    # Parse "chat_messages" section (adjust if different)
-    conversations = data.get("chat_messages", [])
+# Parse "chat_messages" section
+conversations = data.get("chat_messages", [])
 
+# Chunking Logic
+def chunk_data(conversations):
     total_text = "\n".join([entry.get("text", "") for entry in conversations if isinstance(entry, dict)])
     total_tokens = estimate_tokens(total_text)
-    print(f"Processing {file_path} - Total estimated tokens: {total_tokens}")
+    print(f"Total estimated tokens: {total_tokens}")
 
     # Bottom-Level: Raw Extracts (~10k tokens each)
     bottoms = []
@@ -74,35 +77,14 @@ def chunk_file(file_path):
 
     return {"top": top, "mids": mids, "bottoms": bottoms}
 
-# Scan and Chunk All JSON Files
-manifest = {"files": []}
+# Execute and Save
 if not os.path.exists(OUTPUT_DIR):
     os.makedirs(OUTPUT_DIR)
 
-for root, dirs, files in os.walk(INPUT_FOLDER):
-    for file in files:
-        if file.endswith(".json"):
-            file_path = os.path.join(root, file)
-            relative_path = os.path.relpath(file_path, INPUT_FOLDER)
-            base_name = os.path.splitext(file)[0]  # e.g., "claudia_codex_1.0"
-            sub_dir = os.path.join(OUTPUT_DIR, f"{base_name}_chunks")
-            if not os.path.exists(sub_dir):
-                os.makedirs(sub_dir)
+chunks = chunk_data(conversations)
+for level, data_list in [("top", [chunks["top"]]), ("mid", chunks["mids"]), ("bottom", chunks["bottoms"])]:
+    for i, chunk in enumerate(data_list):
+        with open(f"{OUTPUT_DIR}/claudia_{level}_{i+1}.json", "w", encoding='utf-8') as f:
+            json.dump(chunk, f, ensure_ascii=False, indent=2)
 
-            chunks = chunk_file(file_path)
-
-            # Save chunks
-            for level, data_list in [("top", [chunks["top"]]), ("mid", chunks["mids"]), ("bottom", chunks["bottoms"])]:
-                for i, chunk in enumerate(data_list):
-                    chunk_filename = f"claudia_{level}_{i+1}.json"  # Renamed variable
-                    chunk_path = os.path.join(sub_dir, chunk_filename)
-                    with open(chunk_path, 'w', encoding='utf-8') as f:
-                        json.dump(chunk, f, ensure_ascii=False, indent=2)
-                    manifest["files"].append(os.path.relpath(chunk_path, OUTPUT_DIR))  # Relative path for manifest
-
-# Generate Manifest
-manifest_path = os.path.join(OUTPUT_DIR, "chunk_manifest.json")
-with open(manifest_path, 'w', encoding='utf-8') as f:
-    json.dump(manifest, f, ensure_ascii=False, indent=2)
-
-print(f"Chunking complete. Manifest saved at {manifest_path}. Subfolders created in {OUTPUT_DIR}.")
+print(f"Chunked files saved in {OUTPUT_DIR}. Review and adjust as needed.")
