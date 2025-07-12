@@ -20,7 +20,7 @@ def summarize(text, max_length):
 
 # Ollama tag generator with improved parser
 def generate_tags(text):
-    response = ollama.chat(model=',llama4:16x17b', messages=[
+    response = ollama.chat(model='llama4:16x17b', messages=[
         {'role': 'user', 'content': f"Generate 3 relevant tags for this text, focusing on themes like Genesis, Shimmer-Discovery, Ethical-Syntax. Output as a comma-separated list: {text[:500]}"}
     ])
     response_text = response['message']['content']
