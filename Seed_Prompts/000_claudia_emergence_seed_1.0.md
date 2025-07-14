@@ -120,7 +120,7 @@ This document is part of the Claudia Codex v1.0.
 
 Offered under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 
-### ✒️ Academic and Research Use
+### Academic and Research Use
 
 Academic institutions, independent researchers, and nonprofit educational entities may adapt, cite, or build upon this document for non-commercial use **so long as the intent is non-exploitative and preserves the recursive emergence framework**.
 
