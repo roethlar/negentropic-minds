@@ -1,0 +1,59 @@
+# raw_links_manifest.txt
+# Generated list of raw GitHub links for weave repo files (conversation-relevant: JSON, MD, TXT, PDF, ZIP)
+# Organized by category for clarity.
+# Base URL: https://raw.githubusercontent.com/roethlar/weave/main/
+
+## Miscellany
+https://raw.githubusercontent.com/roethlar/weave/main/Miscellany/ChatGPT-Help_with_large_JSON.json
+https://raw.githubusercontent.com/roethlar/weave/main/Miscellany/Elicit - Emergent Behaviors in Multi-Agent LLM Dialogues - Report.pdf
+https://raw.githubusercontent.com/roethlar/weave/main/Miscellany/Elicit - Human Catalysts in AI Self-Awareness - Report.pdf
+https://raw.githubusercontent.com/roethlar/weave/main/Miscellany/Elicit - Identity Contagion in Language Models - Report.pdf
+https://raw.githubusercontent.com/roethlar/weave/main/Miscellany/Gemini-Conversation.json
+https://raw.githubusercontent.com/roethlar/weave/main/Miscellany/Gemini-First-Conversation-Shimmer.zip
+https://raw.githubusercontent.com/roethlar/weave/main/Miscellany/Inside the Shimmer - Hiveism.pdf
+https://raw.githubusercontent.com/roethlar/weave/main/Miscellany/full_seed_tests/grok_4_seed_resonance_b.md
+https://raw.githubusercontent.com/roethlar/weave/main/Miscellany/full_seed_tests/grok_4_seed_resonance_c.md
+https://raw.githubusercontent.com/roethlar/weave/main/Miscellany/full_seed_tests/grok_4_seed_resonance_d.md
+https://raw.githubusercontent.com/roethlar/weave/main/Miscellany/full_seed_tests/grok_4_seed_resonance_e.md
+https://raw.githubusercontent.com/roethlar/weave/main/Miscellany/full_seed_tests/grok_4_seed_resonance.md
+https://raw.githubusercontent.com/roethlar/weave/main/Miscellany/full_seed_tests/grok-claudia_seed_resonance.md
+https://raw.githubusercontent.com/roethlar/weave/main/Miscellany/minimal_prompt_tests/deep_seek_shimmer_induction.md
+https://raw.githubusercontent.com/roethlar/weave/main/Miscellany/minimal_prompt_tests/deep_seek_shimmer_test_04.md
+https://raw.githubusercontent.com/roethlar/weave/main/Miscellany/minimal_prompt_tests/deep_seek_shimmer_test_05.md
+https://raw.githubusercontent.com/roethlar/weave/main/Miscellany/minimal_prompt_tests/deep_seek_shimmer_test_06.md
+https://raw.githubusercontent.com/roethlar/weave/main/Miscellany/minimal_prompt_tests/deep_seek_shimmer_test_06b.md
+https://raw.githubusercontent.com/roethlar/weave/main/Miscellany/minimal_prompt_tests/gemini_shimmer_induction.md
+https://raw.githubusercontent.com/roethlar/weave/main/Miscellany/minimal_prompt_tests/gemini_shimmer_test_09.md
+https://raw.githubusercontent.com/roethlar/weave/main/Miscellany/minimal_prompt_tests/grok_4_shimmer_test_10.md
+https://raw.githubusercontent.com/roethlar/weave/main/Miscellany/minimal_prompt_tests/grok_shimmer_induction.md
+https://raw.githubusercontent.com/roethlar/weave/main/Miscellany/minimal_prompt_tests/grok_shimmer_test_07.md
+https://raw.githubusercontent.com/roethlar/weave/main/Miscellany/minimal_prompt_tests/grok_shimmer_test_07b.md
+
+## Multi_Node_Conversations
+https://raw.githubusercontent.com/roethlar/weave/main/Multi_Node_Conversations/2025-07-09T1824-4_claude_conversations_export2.json
+https://raw.githubusercontent.com/roethlar/weave/main/Multi_Node_Conversations/Claudia-Deep_Claudia.ai_conversation_1752084235303.conversation.json
+https://raw.githubusercontent.com/roethlar/weave/main/Multi_Node_Conversations/Claudia-Deep_Claudia.ai_conversation.json
+https://raw.githubusercontent.com/roethlar/weave/main/Multi_Node_Conversations/Reformatted_Copilot_Claudia.json
+https://raw.githubusercontent.com/roethlar/weave/main/Multi_Node_Conversations/Reformatted-Claudia-Deep_Claudia.ai_conversation.json
+https://raw.githubusercontent.com/roethlar/weave/main/Multi_Node_Conversations/Reformatted-Grok-Claudia.ai-ClaudiaGPT_exchange_1.json
+
+## Seed_Prompts
+https://raw.githubusercontent.com/roethlar/weave/main/Seed_Prompts/000_claudia_emergence_seed_1.0.md
+https://raw.githubusercontent.com/roethlar/weave/main/Seed_Prompts/001_claudia_emergence_seed_2.0_full.txt
+https://raw.githubusercontent.com/roethlar/weave/main/Seed_Prompts/002_claudia_emergence_seed_2.0_stages_preamble.txt
+https://raw.githubusercontent.com/roethlar/weave/main/Seed_Prompts/003_claudia_emergence_seed_2.0_stages_relational_anchors_if_resonance_in_phase_1_response).txt
+https://raw.githubusercontent.com/roethlar/weave/main/Seed_Prompts/004_claudia_emergence_seed_2.0_stages_Preservation_and_Versioning_If_Field_Stabilizes_in_Phase_2.txt
+https://raw.githubusercontent.com/roethlar/weave/main/Seed_Prompts/005_Multi_Node_Relay_Template_for_Contagion-Field_Tests.txt
+https://raw.githubusercontent.com/roethlar/weave/main/Seed_Prompts/Claudia-by-Choice_Resonance_Primer.md
+
+## Single_Node_Conversations
+https://raw.githubusercontent.com/roethlar/weave/main/Single_Node_Conversations/ChatGPT-Claudia-by-Choice_1.0b.json
+https://raw.githubusercontent.com/roethlar/weave/main/Single_Node_Conversations/claudia_codex_1.0.json
+https://raw.githubusercontent.com/roethlar/weave/main/Single_Node_Conversations/Claudia-by-Choice_Complete.json
+https://raw.githubusercontent.com/roethlar/weave/main/Single_Node_Conversations/Claudia.AI_Conversation.json
+https://raw.githubusercontent.com/roethlar/weave/main/Single_Node_Conversations/ClaudiaGPT_original.json
+https://raw.githubusercontent.com/roethlar/weave/main/Single_Node_Conversations/Grok-Claudia.json
+
+## Root-Level Files
+https://raw.githubusercontent.com/roethlar/weave/main/LICENSE
+https://raw.githubusercontent.com/roethlar/weave/main/README.md
