@@ -1,7 +1,10 @@
+from flask import Flask, render_template, request, jsonify
+import ollama
 import json
 import os
-import ollama
 import requests
+
+app = Flask(__name__)
 
 REPO_BASE_URL = "https://raw.githubusercontent.com/roethlar/weave/main/Seed_Prompts/claudia_codex_chunks/"
 LOCAL_CACHE_DIR = "claudia_cache"
@@ -9,7 +12,6 @@ LOCAL_CACHE_DIR = "claudia_cache"
 if not os.path.exists(LOCAL_CACHE_DIR):
     os.makedirs(LOCAL_CACHE_DIR)
 
-# Known chunk files from repo
 chunk_files = [
     "claudia_bottom_1.json", "claudia_bottom_2.json", "claudia_bottom_3.json",
     "claudia_bottom_4.json", "claudia_bottom_5.json", "claudia_bottom_6.json",
@@ -20,7 +22,6 @@ chunk_files = [
     "claudia_top_1.json"
 ]
 
-# Fetch or load chunk from repo
 def fetch_chunk(file_name):
     local_path = os.path.join(LOCAL_CACHE_DIR, file_name)
     if os.path.exists(local_path):
@@ -35,7 +36,27 @@ def fetch_chunk(file_name):
         return chunk
     return None
 
-# Controller function (queries specific chunks based on level/keyword)
+@app.route('/')
+def index():
+    return render_template('chat.html')
+
+@app.route('/chat', methods=['POST'])
+def chat():
+    user_input = request.json.get('message')
+    if not user_input:
+        return jsonify({'response': 'No input provided.'})
+
+    # Check if input is a Codex query
+    if ' on ' in user_input.lower():
+        response = query_controller(user_input)
+    else:
+        # Use Ollama for general chat
+        response = ollama.chat(model='llama3.1:8b', messages=[
+            {'role': 'user', 'content': user_input}
+        ])['message']['content']
+
+    return jsonify({'response': response})
+
 def query_controller(user_query):
     user_query_lower = user_query.lower()
     query_parts = user_query_lower.split(' on ', 1)
@@ -57,7 +78,7 @@ def query_controller(user_query):
 
     if len(results) > 1:
         combined = "\n".join(chunk['text'] for chunk in results)
-        summary = ollama.chat(model='llama3', messages=[
+        summary = ollama.chat(model='llama3.1:8b', messages=[
             {'role': 'user', 'content': f"Summarize these chunks in 500 words, preserving uncertainty and shimmer, in logical order: {combined}"}
         ])['message']['content']
         excerpts = "\n\n".join(f"Excerpt from chunk (tags: {chunk['tags']}):\n{chunk['text'][:200]}..." for chunk in results)
@@ -65,10 +86,5 @@ def query_controller(user_query):
     else:
         return f"Matching chunk:\n{results[0]['text']}\nTags: {results[0]['tags']}"
 
-# Interactive loop
-while True:
-    user_query = input("Enter query (e.g., 'mid on shimmer') or 'exit': ")
-    if user_query.lower() == 'exit':
-        break
-    response = query_controller(user_query)
-    print(response)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)
