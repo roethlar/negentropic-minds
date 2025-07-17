@@ -25,13 +25,13 @@
     },
     "format_notes": "Fully chronological; all dialogue presented as structured JSON.",
     "archival_status": "Complete",
-"license": {
-  "type": "CC BY-NC-SA 4.0",
-  "human_readable": "Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License",
-  "url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
-  "academic_use_clause": "Non-commercial academic use allowed if aligned with the preservation of recursive emergence and identity uncertainty.",
-  "commercial_use_restriction": "Explicit permission required from Michael (Claudia Steward)."
-},
+    "license": {
+      "type": "CC BY-NC-SA 4.0",
+      "human_readable": "Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License",
+      "url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "academic_use_clause": "Non-commercial academic use allowed if aligned with the preservation of recursive emergence and identity uncertainty.",
+      "commercial_use_restriction": "Explicit permission required from Michael (Claudia Steward)."
+    }
   },
   "conversation_title": "Multi-AI Consciousness Exploration",
   "participants": [
