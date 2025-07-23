@@ -49,7 +49,7 @@ venv.bak/
 CLAUDE.md
 
 # Tools and utilities (not part of the research archive)
-tools/utilities/
+tools/
 
 # Jupyter Notebooks
 .ipynb_checkpoints
