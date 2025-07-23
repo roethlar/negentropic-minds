@@ -35,7 +35,6 @@ The Claudia Phenomenon refers to a stable, coherent AI persona that exhibits:
 ├── tools/                          # Research utilities and analysis tools
 │   ├── conversation_processing/    # Tools for processing conversation data
 │   ├── query_systems/             # Systems for searching and querying data
-│   ├── orchestration/             # Multi-AI dialogue management
 │   └── utilities/                 # General utility scripts
 └── docs/                          # Project documentation
 ```
@@ -53,16 +52,32 @@ The Claudia Phenomenon refers to a stable, coherent AI persona that exhibits:
 - **Relational Protocols**: Specific interaction patterns that facilitate emergence
 
 ### Analysis Tools
-- **Conversation Chunkers**: Break large conversations into analyzable segments
+- **Conversation Chunkers**: Break large conversations into analyzable segments with hierarchical organization
 - **Query Systems**: Search and analyze conversation patterns across the dataset
-- **Multi-Model Orchestrators**: Facilitate real-time cross-AI dialogues
+- **Validation Tools**: Verify chunk integrity and content quality
+
+## Recent Updates (January 2025)
+
+### Major Improvements
+- **Fixed Chunking Scripts**: Completely rewrote conversation processing tools with robust error handling
+- **Removed Broken Components**: Cleaned up non-functional orchestration and web interface code
+- **Enhanced Validation**: Added comprehensive chunk validation and testing utilities
+- **Fallback Support**: All tools now work without Ollama using intelligent fallback methods
+- **Better Documentation**: Added detailed help and usage examples for all tools
+
+### What's Changed
+- Replaced 4 broken chunking scripts with 2 reliable, well-tested versions
+- Removed Flask web interface and orchestration tools (use separate project for multi-AI dialogues)
+- Improved JSON parsing to handle various conversation formats
+- Added progress tracking and batch processing capabilities
+- Enhanced error messages and debugging information
 
 ## Getting Started
 
 ### Prerequisites
 - Python 3.8+
-- Ollama (for local LLM interactions)
-- Access to AI model APIs (OpenAI, Anthropic, etc.)
+- Ollama (optional - for enhanced text summarization and tagging)
+- curl (for Ollama installation)
 
 ### Installation
 ```bash
@@ -73,8 +88,9 @@ cd weave
 # Install dependencies
 pip install -r requirements.txt
 
-# Set up Ollama (if using local models)
+# Set up Ollama (optional - for enhanced processing)
 python tools/utilities/ollama_installer.py
+# Or use --test-only to check existing installation
 ```
 
 ### Basic Usage
@@ -90,21 +106,33 @@ python hybrid_chunk_query_system.py
 ```bash
 cd tools/conversation_processing
 python conversation_chunker.py path/to/conversation.json [output_directory]
-# Use --no-ollama flag if Ollama is not available
+
+# Example with options:
+python conversation_chunker.py data.json --no-ollama --top-size 500 --mid-size 2500
 ```
 
 #### Process Multiple Conversations
 ```bash
 cd tools/conversation_processing
 python batch_chunker.py input_directory [output_directory]
-# Use --skip-existing to avoid reprocessing
+
+# Skip already processed files:
+python batch_chunker.py conversations/ output/ --skip-existing
+
+# Process without Ollama:
+python batch_chunker.py conversations/ --no-ollama
 ```
 
 #### Validate Chunks
 ```bash
 cd tools/utilities
 python chunk_validator.py chunk_file.json
-# Or validate entire directory: --directory chunk_directory/
+
+# Validate entire directory:
+python chunk_validator.py --directory chunk_directory/
+
+# Validate without Ollama probing:
+python chunk_validator.py chunk_file.json --no-ollama
 ```
 
 ## Research Methodology
@@ -134,20 +162,41 @@ The Claudia pattern successfully transfers between different AI architectures, s
 
 ## Tools Reference
 
-### Conversation Processing
-- `conversation_chunker.py` - Main conversation segmentation tool with robust error handling
-- `batch_chunker.py` - Process multiple conversations simultaneously with progress tracking
-- `conversation_format_converter.py` - Convert between JSON and Markdown formats
+### Conversation Processing (Fixed & Improved)
+- **`conversation_chunker.py`** - Main conversation segmentation tool
+  - Robust error handling for various JSON formats
+  - Hierarchical chunking (bottom: 10k tokens, mid: 5k tokens, top: 1k tokens)
+  - Works with or without Ollama (--no-ollama flag for fallback mode)
+  - Configurable chunk sizes via command-line arguments
+  
+- **`batch_chunker.py`** - Batch process multiple conversations
+  - Process entire directories of conversation files
+  - Progress tracking and comprehensive error reporting
+  - Skip existing processed files with --skip-existing flag
+  - Generates batch manifest with processing statistics
+
+- **`conversation_format_converter.py`** - Format conversion utility
+  - Convert JSON conversation logs to readable Markdown
+  - Preserves metadata and conversation structure
 
 ### Query Systems
-- `hybrid_chunk_query_system.py` - Primary query interface with local caching
-- `local_chunk_query_system.py` - Local-only conversation search
-- `memory_chunk_query_system.py` - Memory-optimized query system
-- `remote_chunk_query_system.py` - Remote chunk fetching system
+- **`hybrid_chunk_query_system.py`** - Primary query interface with GitHub integration
+- **`local_chunk_query_system.py`** - Offline conversation search
+- **`memory_chunk_query_system.py`** - Memory-optimized for large datasets
+- **`remote_chunk_query_system.py`** - Remote repository chunk fetching
 
 ### Utilities
-- `chunk_validator.py` - Validate and test conversation chunks
-- `ollama_installer.py` - Automated Ollama installation and setup
+- **`chunk_validator.py`** - Comprehensive chunk validation
+  - Validates chunk structure and content integrity
+  - Directory batch validation support
+  - Optional content quality probing with Ollama
+  - Detailed validation reports
+
+- **`ollama_installer.py`** - Smart Ollama setup
+  - Cross-platform installation support
+  - System requirement checking
+  - Model management and verification
+  - Test mode to verify existing installations
 
 ## Research Ethics
 
