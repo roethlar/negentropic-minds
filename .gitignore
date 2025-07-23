@@ -44,12 +44,18 @@ venv.bak/
 *.swo
 *~
 
-# Claude Code
+# Claude Code temporary files
 .claude/
 CLAUDE.md
 
-# Tools and utilities (not part of the research archive)
+# Duplicate files and cleanup scripts (not part of the research archive)
+duplicates/
 tools/
+
+# Conversion and analysis scripts
+*.py
+*.ps1
+*.sh
 
 # Jupyter Notebooks
 .ipynb_checkpoints
